@@ -45,23 +45,23 @@ Set `GEMINI_API_KEY` in `.env`. Screenshots are transcribed only; they are not c
 
 ### Fine-tune and evaluate with a labeled dataset
 
-The web app analyzes one conversation at a time. To fine-tune the optional contextual classifier, prepare a UTF-8 CSV with one row per conversation and these required columns:
+The web app analyzes one conversation at a time. To fine-tune the optional contextual classifier, prepare a UTF-8 CSV with one row per conversation. The current HARAYA dataset schema is:
 
-| Column | Meaning |
-| --- | --- |
-| `conversation_id` | Unique ID for this conversation |
-| `conversation` | Full conversation text, with messages in order. Include speaker tags such as `A:` and `B:` when available. |
-| `final_label` | One category label for the entire conversation |
+```text
+conversation_id,conversation,normalized_text,language,gender_target,sexual_content,physical_harm,intimidation,repeated_contact,after_refusal,monitoring_pursuit,misogynistic,sexist,homophobic,transphobic,actual_disclosure,threatened_disclosure,final_label,source_type
+```
+
+`conversation_id`, `conversation`, and `final_label` are the required training fields: the model learns to classify the full conversation into `final_label`. `normalized_text` and `language` are descriptive columns; preprocessing is performed from `conversation`. The indicator columns (`gender_target` through `threatened_disclosure`) are annotation/scoring fields retained in the dataset, but the current classifier does **not** train on or use them for its prediction. They are useful for indicator-level analysis and can be used later if HARAYA adds a separate indicator-scoring training objective. `source_type` records dataset provenance. The evaluation metrics (accuracy, precision, recall, and F1) are calculated by comparing held-out predictions with `final_label`; they are not read from the indicator columns.
 
 For example:
 
 ```csv
-conversation_id,conversation,final_label,source_type
-chat-001,"A: Please stop messaging me. B: I will keep contacting you.",Incessant Messaging,expert_reviewed
-chat-002,"A: Good luck on your exam! B: Thanks!",Non-Harassment,expert_reviewed
+conversation_id,conversation,normalized_text,language,gender_target,sexual_content,physical_harm,intimidation,repeated_contact,after_refusal,monitoring_pursuit,misogynistic,sexist,homophobic,transphobic,actual_disclosure,threatened_disclosure,final_label,source_type
+chat-001,"A: Please stop messaging me. B: I will keep contacting you.",a please stop messaging me b i will keep contacting you,English,0,0,0,1,3,3,0,0,0,0,0,0,0,Incessant Messaging,expert_reviewed
+chat-002,"A: Good luck on your exam! B: Thanks!",a good luck on your exam b thanks,English,0,0,0,0,0,0,0,0,0,0,0,0,0,Non-Harassment,expert_reviewed
 ```
 
-Start with `backend/data/dataset_template.csv`. The optional `source_type`, `data_origin`, and `validation_status` columns are recorded in the evaluation report when present; they do not affect training. Labels must match a category in `backend/data/legal_rules.json` (including `Non-Harassment`). The trainer also accepts the alternate columns `text` and `label`, or a message-per-row dataset with `conversation_id`, `speaker`, `text`, and `label` (plus optional `order`). Provide at least two distinct conversations for every label so each label can appear in both the training and held-out test sets. The split is stratified and keeps each conversation wholly in one partition.
+Start with `backend/data/dataset_template.csv`. Indicator annotations use numeric scores (the current dataset uses values from 0 to 3); retain the same annotation scale consistently across the dataset. Optional `data_origin` and `validation_status` provenance columns are also recorded in the evaluation report when present. Labels must match a category in `backend/data/legal_rules.json` (including `Non-Harassment`). The trainer also accepts the alternate columns `text` and `label`, or a message-per-row dataset with `conversation_id`, `speaker`, `text`, and `label` (plus optional `order`). Provide at least two distinct conversations for every label so each label can appear in both the training and held-out test sets. The split is stratified and keeps each conversation wholly in one partition.
 
 From the `backend` directory, run:
 

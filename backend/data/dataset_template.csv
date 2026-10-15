@@ -1,1 +1,1 @@
-conversation_id,conversation,final_label,source_type
+conversation_id,conversation,normalized_text,language,gender_target,sexual_content,physical_harm,intimidation,repeated_contact,after_refusal,monitoring_pursuit,misogynistic,sexist,homophobic,transphobic,actual_disclosure,threatened_disclosure,final_label,source_type
