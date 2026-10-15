@@ -1,0 +1,195 @@
+{
+  "meta": {
+    "framework": "HARAYA 2.0 Rule-Guided Contextual Classification",
+    "legal_basis": "Republic Act No. 11313 (Safe Spaces Act) and its IRR — gender-based online sexual harassment research mapping",
+    "disclaimer": "Weights and thresholds are draft operationalizations for research. They must be finalized with a legal expert's validated definitions. HARAYA does not issue legal findings.",
+    "scoring_engine": "rule-based legal scoring engine"
+  },
+  "indicators": {
+    "electronic_communication": {
+      "label": "Electronic communication",
+      "description": "The conduct occurred through electronic or online messaging."
+    },
+    "physical_harm": {
+      "label": "Physical harm",
+      "description": "The speaker expresses intent or a threat to cause bodily injury."
+    },
+    "sexual_context": {
+      "label": "Sexual context",
+      "description": "The conversation contains sexual remarks, requests, or sexualized commentary."
+    },
+    "gender_based_targeting": {
+      "label": "Gender-based targeting",
+      "description": "The conduct targets a person because of sex, gender, gender identity, or sexual orientation."
+    },
+    "misogynistic_language": {
+      "label": "Misogynistic language",
+      "description": "Language that demeans, degrades, or expresses hatred toward women."
+    },
+    "sexist_language": {
+      "label": "Sexist language",
+      "description": "Language that assigns inferior roles or abilities on the basis of sex."
+    },
+    "homophobic_language": {
+      "label": "Homophobic language",
+      "description": "Language that demeans or attacks a person because of same-sex attraction or gay identity."
+    },
+    "transphobic_language": {
+      "label": "Transphobic language",
+      "description": "Language that denies, mocks, or attacks a person's gender identity."
+    },
+    "repeated_communication": {
+      "label": "Repeated communication",
+      "description": "Multiple unsolicited messages are sent across the conversation."
+    },
+    "continued_after_refusal": {
+      "label": "Continued contact after refusal",
+      "description": "Contact continues after the other person asked to stop, refused, or blocked."
+    },
+    "monitoring_or_pursuit": {
+      "label": "Monitoring or pursuit",
+      "description": "The speaker watches, follows, tracks, or otherwise monitors the other person."
+    },
+    "multiple_accounts": {
+      "label": "Multiple accounts",
+      "description": "The speaker indicates they will use another account or identity to keep contacting the person."
+    },
+    "intimidation": {
+      "label": "Intimidation",
+      "description": "The speaker uses threats, pressure, or coercive language to control or frighten the other person."
+    },
+    "fear_or_coercion": {
+      "label": "Fear or coercion",
+      "description": "The interaction creates fear, distress, or coerced compliance."
+    },
+    "actual_disclosure": {
+      "label": "Actual disclosure of private information",
+      "description": "Private personal information is shared or posted without consent."
+    },
+    "threatened_disclosure": {
+      "label": "Threatened disclosure of private information",
+      "description": "The speaker threatens to share private personal information without consent."
+    },
+    "unwanted_contact": {
+      "label": "Unwanted contact",
+      "description": "Messages are sent despite lack of consent or after a request to stop."
+    }
+  },
+  "categories": {
+    "Non-Harassment": {
+      "legal_reference": "No gender-based online sexual harassment elements established under RA 11313 for this conversation.",
+      "max_score": 0,
+      "thresholds": { "insufficient": 0, "possible": 0, "classified": 1 },
+      "indicators": {}
+    },
+    "Physical Threat": {
+      "legal_reference": "RA 11313 — gender-based online sexual harassment involving threats of physical harm.",
+      "max_score": 10,
+      "thresholds": { "insufficient": 3, "possible": 6, "classified": 7 },
+      "indicators": {
+        "physical_harm": 4,
+        "intimidation": 2,
+        "fear_or_coercion": 2,
+        "gender_based_targeting": 2
+      }
+    },
+    "Psychological / Emotional Threat": {
+      "legal_reference": "RA 11313 — online conduct causing fear, humiliation, or psychological distress.",
+      "max_score": 10,
+      "thresholds": { "insufficient": 3, "possible": 6, "classified": 7 },
+      "indicators": {
+        "intimidation": 3,
+        "fear_or_coercion": 3,
+        "gender_based_targeting": 2,
+        "repeated_communication": 2
+      }
+    },
+    "Unwanted Sexual Remarks/Comments": {
+      "legal_reference": "RA 11313 Sec. 12 — gender-based online sexual harassment, including unwanted sexual remarks.",
+      "max_score": 10,
+      "thresholds": { "insufficient": 3, "possible": 6, "classified": 7 },
+      "indicators": {
+        "sexual_context": 4,
+        "unwanted_contact": 3,
+        "gender_based_targeting": 2,
+        "intimidation": 1
+      }
+    },
+    "Misogynistic Remarks/Comments": {
+      "legal_reference": "RA 11313 — gender-based online sexual harassment involving misogynistic remarks.",
+      "max_score": 10,
+      "thresholds": { "insufficient": 3, "possible": 6, "classified": 7 },
+      "indicators": {
+        "misogynistic_language": 4,
+        "gender_based_targeting": 3,
+        "intimidation": 2,
+        "sexual_context": 1
+      }
+    },
+    "Sexist Remarks/Comments": {
+      "legal_reference": "RA 11313 — gender-based online sexual harassment involving sexist remarks.",
+      "max_score": 10,
+      "thresholds": { "insufficient": 3, "possible": 6, "classified": 7 },
+      "indicators": {
+        "sexist_language": 4,
+        "gender_based_targeting": 3,
+        "intimidation": 2,
+        "electronic_communication": 1
+      }
+    },
+    "Homophobic Remarks/Comments": {
+      "legal_reference": "RA 11313 — gender-based online sexual harassment involving homophobic remarks.",
+      "max_score": 9,
+      "thresholds": { "insufficient": 3, "possible": 5, "classified": 6 },
+      "indicators": {
+        "homophobic_language": 4,
+        "gender_based_targeting": 3,
+        "intimidation": 2
+      }
+    },
+    "Transphobic Remarks/Comments": {
+      "legal_reference": "RA 11313 — gender-based online sexual harassment involving transphobic remarks.",
+      "max_score": 9,
+      "thresholds": { "insufficient": 3, "possible": 5, "classified": 6 },
+      "indicators": {
+        "transphobic_language": 4,
+        "gender_based_targeting": 3,
+        "intimidation": 2
+      }
+    },
+    "Cyberstalking": {
+      "legal_reference": "RA 11313 Sec. 12 — online stalking, including unwanted pursuit and monitoring through electronic means.",
+      "max_score": 10,
+      "thresholds": { "insufficient": 3, "possible": 6, "classified": 7 },
+      "indicators": {
+        "repeated_communication": 2,
+        "continued_after_refusal": 3,
+        "monitoring_or_pursuit": 2,
+        "multiple_accounts": 2,
+        "fear_or_coercion": 1
+      }
+    },
+    "Incessant Messaging": {
+      "legal_reference": "RA 11313 — unwanted and repeated electronic communications after lack of consent.",
+      "max_score": 10,
+      "thresholds": { "insufficient": 3, "possible": 6, "classified": 7 },
+      "indicators": {
+        "repeated_communication": 4,
+        "continued_after_refusal": 4,
+        "electronic_communication": 1,
+        "fear_or_coercion": 1
+      }
+    },
+    "Unauthorized Sharing of Personal Information": {
+      "legal_reference": "RA 11313 / related cybercrime mapping — non-consensual sharing or threatened sharing of private information.",
+      "max_score": 12,
+      "thresholds": { "insufficient": 3, "possible": 6, "classified": 7 },
+      "indicators": {
+        "actual_disclosure": 5,
+        "threatened_disclosure": 4,
+        "intimidation": 2,
+        "fear_or_coercion": 1
+      }
+    }
+  }
+}
