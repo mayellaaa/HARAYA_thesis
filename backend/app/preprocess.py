@@ -25,28 +25,33 @@ def clean_text(text: str) -> str:
     return text
 
 
-def _apply_mapping(text: str, mapping: dict[str, str]) -> str:
-    updated = text
-    for term in sorted(mapping, key=len, reverse=True):
-        updated = re.sub(
-            rf"(?<!\w){re.escape(term)}(?!\w)",
-            f" {mapping[term]} ",
-            updated,
-            flags=re.IGNORECASE,
-        )
-    return updated
+def _apply_mappings_once(text: str, mappings: dict[str, str]) -> str:
+    terms = sorted(mappings, key=len, reverse=True)
+    pattern = re.compile(
+        rf"(?<!\w)(?:{'|'.join(re.escape(term) for term in terms)})(?!\w)",
+        flags=re.IGNORECASE,
+    )
+    return pattern.sub(lambda match: f" {mappings[match.group(0).casefold()]} ", text)
+
+
+def _replace_symbols(text: str, mappings: dict[str, str]) -> str:
+    terms = sorted(mappings, key=len, reverse=True)
+    pattern = re.compile("|".join(re.escape(term) for term in terms))
+    return pattern.sub(lambda match: f" {mappings[match.group(0)]} ", text)
 
 
 def normalize_text(text: str) -> str:
     lex = load_lexicons()
     normalized = clean_text(text)
-    for emoji, meaning in lex["emoji"].items():
-        normalized = normalized.replace(emoji, f" {meaning} ")
-    for emoticon, meaning in lex["emoticons"].items():
-        normalized = normalized.replace(emoticon, f" {meaning} ")
+    normalized = _replace_symbols(normalized, lex["emoji"])
+    normalized = _replace_symbols(normalized, lex["emoticons"])
     normalized = normalized.lower()
-    for table in ("gay_lingo", "slang", "abbreviations", "tagalog"):
-        normalized = _apply_mapping(normalized, lex[table])
+    mappings = {
+        term.casefold(): meaning
+        for table in ("sexual_slang", "gay_lingo", "slang", "abbreviations", "tagalog")
+        for term, meaning in lex[table].items()
+    }
+    normalized = _apply_mappings_once(normalized, mappings)
     normalized = re.sub(r"[^\w\s]", " ", normalized)
     return re.sub(r"\s+", " ", normalized).strip()
 
