@@ -86,6 +86,7 @@
       "legal_reference": "RA 11313 — gender-based online sexual harassment involving threats of physical harm.",
       "max_score": 10,
       "thresholds": { "insufficient": 3, "possible": 6, "classified": 7 },
+      "core_indicator_groups": [["physical_harm"]],
       "indicators": {
         "physical_harm": 4,
         "intimidation": 2,
@@ -97,6 +98,7 @@
       "legal_reference": "RA 11313 — online conduct causing fear, humiliation, or psychological distress.",
       "max_score": 10,
       "thresholds": { "insufficient": 3, "possible": 6, "classified": 7 },
+      "core_indicator_groups": [["intimidation"], ["fear_or_coercion"]],
       "indicators": {
         "intimidation": 3,
         "fear_or_coercion": 3,
@@ -105,9 +107,10 @@
       }
     },
     "Unwanted Sexual Remarks/Comments": {
-      "legal_reference": "RA 11313 Sec. 12 — gender-based online sexual harassment, including unwanted sexual remarks.",
+      "legal_reference": "RA 11313 — gender-based online sexual harassment, including unwanted sexual remarks.",
       "max_score": 10,
       "thresholds": { "insufficient": 3, "possible": 6, "classified": 7 },
+      "core_indicator_groups": [["sexual_context"], ["unwanted_contact"]],
       "indicators": {
         "sexual_context": 4,
         "unwanted_contact": 3,
@@ -119,6 +122,7 @@
       "legal_reference": "RA 11313 — gender-based online sexual harassment involving misogynistic remarks.",
       "max_score": 10,
       "thresholds": { "insufficient": 3, "possible": 6, "classified": 7 },
+      "core_indicator_groups": [["misogynistic_language"]],
       "indicators": {
         "misogynistic_language": 4,
         "gender_based_targeting": 3,
@@ -130,6 +134,7 @@
       "legal_reference": "RA 11313 — gender-based online sexual harassment involving sexist remarks.",
       "max_score": 10,
       "thresholds": { "insufficient": 3, "possible": 6, "classified": 7 },
+      "core_indicator_groups": [["sexist_language"]],
       "indicators": {
         "sexist_language": 4,
         "gender_based_targeting": 3,
@@ -141,6 +146,7 @@
       "legal_reference": "RA 11313 — gender-based online sexual harassment involving homophobic remarks.",
       "max_score": 9,
       "thresholds": { "insufficient": 3, "possible": 5, "classified": 6 },
+      "core_indicator_groups": [["homophobic_language"]],
       "indicators": {
         "homophobic_language": 4,
         "gender_based_targeting": 3,
@@ -151,6 +157,7 @@
       "legal_reference": "RA 11313 — gender-based online sexual harassment involving transphobic remarks.",
       "max_score": 9,
       "thresholds": { "insufficient": 3, "possible": 5, "classified": 6 },
+      "core_indicator_groups": [["transphobic_language"]],
       "indicators": {
         "transphobic_language": 4,
         "gender_based_targeting": 3,
@@ -161,6 +168,7 @@
       "legal_reference": "RA 11313 Sec. 12 — online stalking, including unwanted pursuit and monitoring through electronic means.",
       "max_score": 10,
       "thresholds": { "insufficient": 3, "possible": 6, "classified": 7 },
+      "core_indicator_groups": [["monitoring_or_pursuit", "multiple_accounts"]],
       "indicators": {
         "repeated_communication": 2,
         "continued_after_refusal": 3,
@@ -173,6 +181,7 @@
       "legal_reference": "RA 11313 — unwanted and repeated electronic communications after lack of consent.",
       "max_score": 10,
       "thresholds": { "insufficient": 3, "possible": 6, "classified": 7 },
+      "core_indicator_groups": [["repeated_communication"], ["continued_after_refusal"]],
       "indicators": {
         "repeated_communication": 4,
         "continued_after_refusal": 4,
@@ -184,6 +193,7 @@
       "legal_reference": "RA 11313 / related cybercrime mapping — non-consensual sharing or threatened sharing of private information.",
       "max_score": 12,
       "thresholds": { "insufficient": 3, "possible": 6, "classified": 7 },
+      "core_indicator_groups": [["actual_disclosure", "threatened_disclosure"]],
       "indicators": {
         "actual_disclosure": 5,
         "threatened_disclosure": 4,

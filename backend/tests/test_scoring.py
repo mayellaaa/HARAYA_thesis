@@ -3,6 +3,10 @@ from app.preprocess import conversation_document, preprocess_messages
 from app.scoring import final_prediction, score_categories
 
 
+def _detected(*indicators: str) -> dict[str, dict[str, bool]]:
+    return {indicator: {"present": True} for indicator in indicators}
+
+
 def _run(messages: list[dict]):
     processed = preprocess_messages(messages)
     detected = detect_indicators(processed, conversation_document(processed))
@@ -26,6 +30,38 @@ def test_cyberstalking_conversation_level():
     assert prediction in {"Cyberstalking", "Incessant Messaging"}
     assert winner is not None
     assert winner["score"] >= 4
+
+
+def test_shared_indicators_do_not_score_categories_without_core_evidence():
+    scores = score_categories(
+        _detected("electronic_communication", "gender_based_targeting", "intimidation")
+    )
+
+    assert scores
+    assert all(item["score"] == 0 for item in scores)
+    assert all(item["decision"] == "Insufficient evidence" for item in scores)
+
+
+def test_category_specific_evidence_prevents_unrelated_category_scores():
+    scores = score_categories(
+        _detected("misogynistic_language", "gender_based_targeting", "intimidation")
+    )
+    scores_by_label = {item["label"]: item for item in scores}
+
+    assert scores_by_label["Misogynistic Remarks/Comments"]["score"] == 9
+    assert scores_by_label["Misogynistic Remarks/Comments"]["decision"] == "Classified"
+    assert scores_by_label["Sexist Remarks/Comments"]["score"] == 0
+    assert scores_by_label["Unwanted Sexual Remarks/Comments"]["score"] == 0
+
+
+def test_incessant_messaging_does_not_also_classify_as_cyberstalking_without_stalking_evidence():
+    scores = score_categories(
+        _detected("repeated_communication", "continued_after_refusal")
+    )
+    scores_by_label = {item["label"]: item for item in scores}
+
+    assert scores_by_label["Incessant Messaging"]["decision"] == "Classified"
+    assert scores_by_label["Cyberstalking"]["score"] == 0
 
 
 def test_non_harassment_greeting():

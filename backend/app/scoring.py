@@ -28,7 +28,12 @@ def score_categories(detected: dict[str, dict[str, Any]]) -> list[dict[str, Any]
     for label, spec in rules["categories"].items():
         if label == "Non-Harassment":
             continue
-        matched = [key for key in spec["indicators"] if key in present]
+        core_groups = spec["core_indicator_groups"]
+        eligible = bool(core_groups) and all(
+            any(indicator in present for indicator in group)
+            for group in core_groups
+        )
+        matched = [key for key in spec["indicators"] if eligible and key in present]
         score = sum(spec["indicators"][key] for key in matched)
         results.append(
             {
